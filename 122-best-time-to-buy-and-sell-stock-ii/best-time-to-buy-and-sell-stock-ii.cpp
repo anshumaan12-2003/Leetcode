@@ -5,21 +5,15 @@ public:
         vector<int> ahead(2,0);
         vector<int> curr(2,0);
 
-        ahead[0] = ahead[1] = 0;
+        long aheadnotbuy,aheadbuy,currnotbuy,currbuy;
+        aheadnotbuy = aheadbuy = 0;
 
         for(int i=n-1;i>=0;i--){
-            for(int buy=0;buy<=1;buy++){
-                long profit = 0;
-                if(buy){
-                    profit = max(-prices[i] + ahead[0], ahead[1]);
-                }
-                else{
-                    profit = max(+prices[i] + ahead[1],ahead[0]);
-                }
-                curr[buy] = profit;
-            }
-            ahead = curr;
+            currnotbuy= max(+prices[i] + aheadbuy,aheadnotbuy);
+            currbuy = max(-prices[i] + aheadnotbuy, aheadbuy);
+            aheadbuy = currbuy;
+            aheadnotbuy = currnotbuy;
         }
-        return ahead[1];
+        return aheadbuy;
     }
 };
